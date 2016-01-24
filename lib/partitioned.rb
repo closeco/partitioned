@@ -1,6 +1,11 @@
+require 'active_record/base'
+
 require 'monkey_patch_activerecord'
 require 'monkey_patch_postgres'
-require 'monkey_patch_redshift'
+
+if ActiveRecord::Base.configurations.include? 'redshiftdb'
+  require 'monkey_patch_redshift'
+end
 
 require 'partitioned/active_record_overrides'
 require 'partitioned/partitioned_base/configurator.rb'
