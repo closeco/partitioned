@@ -98,5 +98,9 @@ module ActiveRecord::ConnectionAdapters
       end
       execute("DROP SCHEMA #{name}#{' cascade' if options[:cascade]}")
     end
+
+    def add_foreign_key_custom(referencing_table_name, referencing_field_name, referenced_table_name, referenced_field_name = :id)
+      execute("ALTER TABLE #{referencing_table_name} add foreign key (#{referencing_field_name}) references #{referenced_table_name}(#{referenced_field_name})")
+    end
   end
 end
