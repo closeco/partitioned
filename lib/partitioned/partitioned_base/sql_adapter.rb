@@ -202,8 +202,8 @@ module Partitioned
             used_options[:name] = used_options[:unique] ? unique_index_name(name, *partition_key_values) : index_name(name, *partition_key_values)
           end
 
-          if used_options.has_key?(:sql)
-            sql = used_options[:sql].gsub('#{name}',used_options[:name]).gsub('#{table}',partition_table_name(*partition_key_values))
+          if used_options.has_key?(:custom)
+            sql = "CREATE INDEX #{used_options[:name]} ON #{partition_table_name(*partition_key_values)} #{used_options[:custom]}"
             execute(sql)
           else
             add_index(partition_table_name(*partition_key_values), field, used_options)
