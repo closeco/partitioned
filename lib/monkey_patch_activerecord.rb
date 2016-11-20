@@ -73,7 +73,7 @@ module ActiveRecord
       # partitioned on are passed along to the update code so that the
       # update statement runs against a child partition, not the
       # parent table, to help with performance.
-      if self.class.respond_to?(:partition_keys)
+      if self.class.respond_to?(:partition_keys) && attribute_names.any?
         attribute_names.concat self.class.partition_keys.map(&:to_s)
         attribute_names.uniq!
       end
